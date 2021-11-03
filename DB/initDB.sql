@@ -101,8 +101,14 @@ create table CUNGCAP
 create table TAIXE
 (
 	MaTX char(6),
-	-- ô Khang bổ sung thêm mấy thuộc tính còn lại nha
-	-- t tạo table với PK trước để viết cái FK của bên t
+	HoTen nvarchar(30),
+	CMND char(12),
+	SoDT varchar(12),
+	DiaChi nvarchar(100),
+	BienSoXe varchar(10),
+	KhuVucHoatDong nvarchar(30),
+	Email varchar(64),
+	MaTaiKhoanNganHang varchar(17),
 	TenTaiKhoan varchar(20),
 	constraint PK_TAIXE primary key(MaTX)
 )
@@ -110,10 +116,28 @@ create table TAIXE
 create table TAIKHOAN
 (
 	TenTaiKhoan varchar(20),
-	-- ô Khang bổ sung thêm mấy thuộc tính còn lại nha
-	-- t tạo table với PK trước để viết cái FK của bên t
+	MatKhau varchar(20),
+	PhanLoai char(2),
+	TinhTrangKhoa bool,
 	constraint PK_TAIKHOAN primary key(TenTaiKhoan)
 )
+
+create table NHANVIEN
+(
+	MaNhanVien char(6),
+	HoTen nvarchar(30),
+	TenTaiKhoan varchar(20),
+	constraint PK_NHANVIEN primary key(MaNhanVien)
+)
+
+create table ADMINISTRATOR
+(
+	MaAdministrator char(6),
+	HoTen nvarchar(30),
+	TenTaiKhoan varchar(20),
+	constraint PK_ADMIN primary key(MaAdministrator)
+)
+
 
 -- Tạo khóa ngoại
 alter table KHACHHANG
@@ -173,6 +197,16 @@ references SANPHAM(MaSP)
 
 alter table TAIXE
 add constraint FK_TAIXE_TAIKHOAN
+foreign key(TenTaiKhoan)
+references TAIKHOAN(TenTaiKhoan)
+
+alter table NHANVIEN
+add constraint FK_NHANVIEN_TAIKHOAN
+foreign key(TenTaiKhoan)
+references TAIKHOAN(TenTaiKhoan)
+
+alter table ADMINISTRATOR
+add constraint FK_ADMINISTRATOR_TAIKHOAN
 foreign key(TenTaiKhoan)
 references TAIKHOAN(TenTaiKhoan)
 
