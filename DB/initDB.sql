@@ -86,16 +86,11 @@ create table SANPHAM
 	MaSP char(6),
 	TenSanPham nvarchar(50),
 	Gia int,
+	MaDoiTac char(6),
+	STT int,
 	constraint PK_SANPHAM primary key(MaSP)
 )
 
-create table CUNGCAP
-(
-	MaDoiTac char(6),
-	STT int,
-	MaSanPham char(6),
-	constraint PK_CUNGCAP primary key(MaDoiTac,STT,MaSanPham)
-)
 
 create table TAIXE
 (
@@ -189,15 +184,10 @@ add constraint FK_CHINHANH_HOPDONG
 foreign key(MaHopDong)
 references HOPDONG(MaHD)
 
-alter table CUNGCAP
-add constraint FK_CUNGCAP_CHINHANH
+alter table SANPHAM
+add constraint FK_SANPHAM_CHINHANH
 foreign key(MaDoiTac,STT)
 references CHINHANH(MaDoiTac,STT)
-
-alter table CUNGCAP
-add constraint FK_CUNGCAP_SANPHAM
-foreign key(MaSanPham)
-references SANPHAM(MaSP)
 
 alter table TAIXE
 add constraint FK_TAIXE_TAIKHOAN
