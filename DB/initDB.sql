@@ -118,7 +118,7 @@ create table TAIKHOAN
 	TenTaiKhoan varchar(20),
 	MatKhau varchar(20),
 	PhanLoai char(2),
-	TinhTrangKhoa bool,
+	TinhTrangKhoa bit,
 	constraint PK_TAIKHOAN primary key(TenTaiKhoan)
 )
 
