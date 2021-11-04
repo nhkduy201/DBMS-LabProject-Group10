@@ -20,17 +20,16 @@ create table KHACHHANG
 
 create table DONHANG
 (
-	MaDonHang char(8),
+	MaDH char(8),
 	HinhThucThanhToan nvarchar(20),
 	DiaChiGiaoHang nvarchar(100),
 	PhiSP int,
 	PhiVC int,
 	TinhTrangVanChuyen nvarchar(20),
-	MaKH char(6),
+	MaKhachHang char(6),
 	MaTaiXe char(6),
-	MaDT char(6),
-	STT int,
-	constraint PK_DONHANG primary key(MaDonHang)
+	MaDoiTac char(6),
+	constraint PK_DONHANG primary key(MaDH)
 )
 
 create table CT_DONHANG
@@ -55,7 +54,7 @@ create table DOITAC
 	DiaChiKD nvarchar(100),
 	SDT char(10),
 	Email varchar(30),
-	TenTaiKhoan varchar(10),
+	TenTaiKhoan varchar(20),
 	constraint PK_DOITAC primary key(MaDT)
 )
 
@@ -75,28 +74,23 @@ create table HOPDONG
 
 create table CHINHANH
 (
-	MaDT char(6),
+	MaDoiTac char(6),
 	STT int,
 	DiaChi nvarchar(100),
 	MaHopDong char(6),
-	constraint PK_CHINHANH primary key(MaDT,STT)
+	constraint PK_CHINHANH primary key(MaDoiTac,STT)
 )
 
 create table SANPHAM
 (
 	MaSP char(6),
-	TenSP nvarchar(50),
+	TenSanPham nvarchar(50),
 	Gia int,
+	MaDoiTac char(6),
+	STT int,
 	constraint PK_SANPHAM primary key(MaSP)
 )
 
-create table CUNGCAP
-(
-	MaDT char(6),
-	STT int,
-	MaSP char(6),
-	constraint PK_CUNGCAP primary key(MaDT,STT,MaSP)
-)
 
 create table TAIXE
 (
@@ -115,19 +109,19 @@ create table TAIXE
 
 create table TAIKHOAN
 (
-	TenTaiKhoan varchar(20),
+	TenTK varchar(20),
 	MatKhau varchar(20),
 	PhanLoai char(2),
 	TinhTrangKhoa bit,
-	constraint PK_TAIKHOAN primary key(TenTaiKhoan)
+	constraint PK_TAIKHOAN primary key(TenTK)
 )
 
 create table NHANVIEN
 (
-	MaNhanVien char(6),
+	MaNV char(6),
 	HoTen nvarchar(30),
 	TenTaiKhoan varchar(20),
-	constraint PK_NHANVIEN primary key(MaNhanVien)
+	constraint PK_NHANVIEN primary key(MaNV)
 )
 
 create table ADMINISTRATOR
@@ -143,11 +137,11 @@ create table ADMINISTRATOR
 alter table KHACHHANG
 add constraint FK_KHACHHANG_TAIKHOAN
 foreign key(TenTaiKhoan)
-references TAIKHOAN(TenTaiKhoan)
+references TAIKHOAN(TenTK)
 
 alter table DONHANG
 add constraint FK_DONHANG_KHACHHANG
-foreign key(MaKH)
+foreign key(MaKhachHang)
 references KHACHHANG(MaKH)
 
 alter table DONHANG
@@ -156,19 +150,24 @@ foreign key(MaTaiXe)
 references TAIXE(MaTX)
 
 alter table DONHANG
-add constraint FK_DONHANG_CHINHANH
-foreign key (MaDT,STT)
-references CHINHANH(MaDT,STT)
+add constraint FK_DONHANG_DOITAC
+foreign key (MaDoiTac)
+references DOITAC(MaDT)
 
 alter table CT_DONHANG
 add constraint FK_CT_DONHANG_DONHANG
 foreign key (MaDonHang)
-references DONHANG(MaDonHang)
+references DONHANG(MaDH)
 
 alter table CT_DONHANG
 add constraint FK_CT_DONHANG_SANPHAM
 foreign key (MaSanPham)
 references SANPHAM(MaSP)
+
+alter table DOITAC
+add constraint FK_DOITAC_TAIKHOAN
+foreign key(TenTaiKhoan)
+references TAIKHOAN(TenTK)
 
 alter table HOPDONG
 add constraint FK_HOPDONG_DOITAC
@@ -177,7 +176,7 @@ references DOITAC(MaDT)
 
 alter table CHINHANH
 add constraint FK_CHINHANH_DOITAC
-foreign key(MaDT)
+foreign key(MaDoiTac)
 references DOITAC(MaDT)
 
 alter table CHINHANH
@@ -185,30 +184,25 @@ add constraint FK_CHINHANH_HOPDONG
 foreign key(MaHopDong)
 references HOPDONG(MaHD)
 
-alter table CUNGCAP
-add constraint FK_CUNGCAP_CHINHANH
-foreign key(MaDT,STT)
-references CHINHANH(MaDT,STT)
-
-alter table CUNGCAP
-add constraint FK_CUNGCAP_SANPHAM
-foreign key(MaSP)
-references SANPHAM(MaSP)
+alter table SANPHAM
+add constraint FK_SANPHAM_CHINHANH
+foreign key(MaDoiTac,STT)
+references CHINHANH(MaDoiTac,STT)
 
 alter table TAIXE
 add constraint FK_TAIXE_TAIKHOAN
 foreign key(TenTaiKhoan)
-references TAIKHOAN(TenTaiKhoan)
+references TAIKHOAN(TenTK)
 
 alter table NHANVIEN
 add constraint FK_NHANVIEN_TAIKHOAN
 foreign key(TenTaiKhoan)
-references TAIKHOAN(TenTaiKhoan)
+references TAIKHOAN(TenTK)
 
 alter table ADMINISTRATOR
 add constraint FK_ADMINISTRATOR_TAIKHOAN
 foreign key(TenTaiKhoan)
-references TAIKHOAN(TenTaiKhoan)
+references TAIKHOAN(TenTK)
 
 /*use master
 go
