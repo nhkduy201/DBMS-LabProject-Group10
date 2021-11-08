@@ -112,7 +112,7 @@ create table TAIKHOAN
 	TenTK varchar(20),
 	MatKhau varchar(20),
 	PhanLoai char(2),
-	TinhTrangKhoa bit,
+	TinhTrangKhoa varchar(8) DEFAULT 'Chua cap',
 	constraint PK_TAIKHOAN primary key(TenTK)
 )
 
