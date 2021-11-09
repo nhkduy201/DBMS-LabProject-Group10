@@ -23,16 +23,10 @@ from DONHANG dh join DOITAC dt on dh.MaDoiTac = dt.MaDT
 				join TAIKHOAN tk on dt.TenTaiKhoan = tk.TenTK
 where tk.TenTK = CURRENT_USER
 go
---Cấp quyền cho đối tác
-grant insert on HOPDONG to DoiTac
-grant insert on CHINHANH to DoiTac
-grant insert on SANPHAM to DoiTac
-grant update,delete on VDT_QLSANPHAM to DoiTac
-grant select on VDT_QLDONHANG to DoiTac
-grant update on VDT_CAPNHATDONHANG to DoiTac
-
+--------------------------------------------
 exec sp_addrole 'KhachHang'
 go
+
 --Tạo view để khách hàng có thể theo dõi quá trình vận chuyển đơn hàng của mình
 create view VKH_THEODOIDONHANG as
 select MaDH , TinhTrangVanChuyen
@@ -40,15 +34,10 @@ from DONHANG dh join KHACHHANG kh on dh.MaKhachHang = kh.MaKH
 				join TAIKHOAN tk on kh.TenTaiKhoan = tk.TenTK
 where tk.TenTK = CURRENT_USER
 go
---Cấp quyền cho khách hàng
---grant insert on DONHANG(MaDH,HinhThucThanhToan,DiaChiGiaoHang,TinhTrangVanChuyen,MaDoiTac) to KhachHang
---grant insert on CT_DONHANG(MaDonHang,MaSanPham,Soluong) to KhachHang
-grant select on DOITAC(TenDoiTac) to KhachHang
-grant select on SANPHAM(TenSanPham) to KhachHang
-grant select on VKH_THEODOIDONHANG to KhachHang
-
+--------------------------------------------
 exec sp_addrole 'TaiXe'
 go
+
 --Tạo view để tài xế có thể xem các đơn hàng khu vực của minh
 create view VTX_XEMDONHANG as
 select MaDH,DiaChiGiaoHang,PhiVC
@@ -77,16 +66,53 @@ from DONHANG dh join TAIXE tx on dh.MaTaiXe = tx.MaTX
 				join TAIKHOAN tk on tx.TenTaiKhoan = tk.TenTK
 where tk.TenTK = CURRENT_USER
 go
---Cấp quyền cho tài xế
-grant select on VTX_XEMDONHANG to TaiXe
-grant update on VTX_NHANDONHANG  to TaiXe
-grant update on VTX_CAPNHATDONHANG to TaiXe
-grant select on VTX_THEODOITHUNHAP to TaiXe
+--------------------------------------------
+exec sp_addrole 'NHANVIEN'
+go
+--------------------------------------------
+exec sp_addrole 'ADMINISTRATOR'
+go
+--------------------------------------------
+--Cấp quyền cho DOITAC
+grant insert on HOPDONG to DOITAC
+grant insert on CHINHANH to DOITAC
+grant insert on SANPHAM to DOITAC
+grant update,delete on VDT_QLSANPHAM to DOITAC
+grant select on VDT_QLDONHANG to DOITAC
+grant update on VDT_CAPNHATDONHANG to DOITAC
+go
 
+--Cấp quyền cho KHACHHANG
+/*grant insert on DONHANG(MaDH,HinhThucThanhToan,DiaChiGiaoHang,TinhTrangVanChuyen,MaDoiTac) to KHACHHANG
+grant insert on CT_DONHANG(MaDonHang,MaSanPham,Soluong) to KHACHHANG
+grant select on DOITAC(TenDoiTac) to KHACHHANG
+grant select on SANPHAM(TenSanPham) to KHACHHANG
+grant select on VKH_THEODOIDONHANG to KHACHHANG
+go*/
 
+--Cấp quyền cho TAIXE
+grant select on VTX_XEMDONHANG to TAIXE
+grant update on VTX_NHANDONHANG to TAIXE
+grant update on VTX_CAPNHATDONHANG to TAIXE
+grant select on VTX_THEODOITHUNHAP to TAIXE
+go
 
+--Cấp quyền cho NHANVIEN
+grant select on HOPDONG to NHANVIEN
+grant update on HOPDONG (TinhTrangDuyet) to NHANVIEN
+go
 
-
-
-
-
+--Cấp quyền cho ADMINISTRATOR
+grant insert, update on NHANVIEN to ADMINISTRATOR
+grant select, delete on NHANVIEN to ADMINISTRATOR
+grant insert, update on TAIKHOAN to ADMINISTRATOR
+grant select, delete on TAIKHOAN to ADMINISTRATOR
+grant insert, update on DOITAC to ADMINISTRATOR
+grant select, delete on DOITAC to ADMINISTRATOR
+grant insert, update on KHACHHANG to ADMINISTRATOR
+grant select, delete on KHACHHANG to ADMINISTRATOR
+grant insert, update on TAIXE to ADMINISTRATOR
+grant select, delete on TAIXE to ADMINISTRATOR
+grant insert, update on ADMINISTRATOR to ADMINISTRATOR with grant option
+grant select, delete on ADMINISTRATOR to ADMINISTRATOR with grant option
+go
