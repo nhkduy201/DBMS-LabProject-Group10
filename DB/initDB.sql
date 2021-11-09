@@ -23,6 +23,7 @@ create table DONHANG
 	MaDH char(8),
 	HinhThucThanhToan nvarchar(20),
 	DiaChiGiaoHang nvarchar(100),
+	KhuVucGiaoHang nvarchar(30),
 	PhiSP int,
 	PhiVC int,
 	TinhTrangVanChuyen nvarchar(20),
