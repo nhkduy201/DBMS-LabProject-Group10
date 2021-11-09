@@ -38,7 +38,7 @@ values ('DH0001',1000,N'Đang đóng gói','KH0001',NULL,'DT0001'),
 insert into CT_DONHANG(MaDonHang,MaSanPham,SoLuong)
 values ('DH0001','SP0001',1),
 		('DH0001','SP0002',2),				
-		('DH0001','SP0001',3),
+		('DH0002','SP0001',3),
 		('DH0002','SP0002',4)
 
 
