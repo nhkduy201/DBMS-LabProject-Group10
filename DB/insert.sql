@@ -1,3 +1,5 @@
+use QLDatChuyenHang
+go
 insert into TAIKHOAN(TenTK,MatKhau,PhanLoai)
 values ('ad1','123','AD'),
 		('nv1','123','NV'),

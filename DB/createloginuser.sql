@@ -1,8 +1,9 @@
 use QLDatChuyenHang
 go
-alter
---create
-procedure CreateLoginUser
+drop proc SP_CreateLoginUser
+go
+create
+procedure SP_CreateLoginUser
 as
 declare @TenTK varchar(20)
 declare @MatKhau varchar(20)
@@ -21,24 +22,23 @@ where TK.TinhTrangKhoa = 'Chua cap')
 	where TK.TinhTrangKhoa = 'Chua cap'
 	update TAIKHOAN
 			set TinhTrangKhoa = 'Da cap'
-			where TenTK = @TenTK and MatKhau = @MatKhau
+			where TenTK = @TenTK
 	set @createlogin = 'CREATE LOGIN ' + @TenTK + ' WITH PASSWORD=''' + @MatKhau + ''', CHECK_POLICY = OFF'
 	set @createuser = 'CREATE USER ' + @TenTK + ' FOR LOGIN ' + @TenTK
 	if @PhanLoai = 'AD'
-		set @Role = 'Admin'
+		set @Role = 'ADMINIS'
 	if @PhanLoai = 'NV'
-		set @Role = 'NhanVien'
+		set @Role = 'NHANVIEN'
 	if @PhanLoai = 'DT'
-		set @Role = 'DoiTac'
+		set @Role = 'DOITAC'
 	if @PhanLoai = 'KH'
-		set @Role = 'KhachHang'
+		set @Role = 'KHACHHANG'
 	if @PhanLoai = 'TX'
-		set @Role = 'TaiXe'
-	set @adusertorole = 'ALTER ROLE ' + @Role + ' ADD MEMBER ' + @TenTK + ';'
+		set @Role = 'TAIXE'
+	set @adusertorole = 'ALTER ROLE ' + @Role + ' ADD MEMBER ' + @TenTK
 	exec (@createlogin)
 	exec (@createuser)
 	exec (@adusertorole)
-	--exec sp_addrolemember @Role ,@TenTK
 end
 go
-EXEC CreateLoginUser;
+EXEC SP_CreateLoginUser;
