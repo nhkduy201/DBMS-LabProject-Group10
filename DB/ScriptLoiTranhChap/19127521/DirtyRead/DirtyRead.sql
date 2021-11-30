@@ -10,8 +10,8 @@ as
 begin tran
 	begin try
 		if not exists (select *
-						from SANPHAM
-						where MaSP = @MaSP)
+				from SANPHAM
+				where MaSP = @MaSP)
 		begin
 			print N'Sản phẩm ' + @MaSP + N' không tồn tại.'
 			rollback tran
@@ -29,7 +29,15 @@ begin tran
 		waitfor delay '0:0:05'
 	end try
 	-----------
-	begin catch		print N'Lỗi hệ thống'		rollback tran	end catchcommit trango--Khách hàng đọc thông tin sản phẩm
+	begin catch
+		print N'Lỗi hệ thống'
+		rollback tran
+	end catch
+commit tran
+go
+
+
+--Khách hàng đọc thông tin sản phẩm
 create
 proc sp_XemSanPham
 	@MaSP char(6),
@@ -39,8 +47,8 @@ set tran isolation level read uncommitted
 begin tran
 	begin try
 		if not exists (select *
-						from SANPHAM
-						where MaSP = @MaSP)
+				from SANPHAM
+				where MaSP = @MaSP)
 		begin
 			print N'Sản phẩm ' + @MaSP + N' không tồn tại.'
 			rollback tran
@@ -50,4 +58,8 @@ begin tran
 	end try
 	-----------
 	begin catch
-		print N'Lỗi hệ thống'		rollback tran	end catchcommit trango
+		print N'Lỗi hệ thống'
+		rollback tran
+	end catch
+commit tran
+go
