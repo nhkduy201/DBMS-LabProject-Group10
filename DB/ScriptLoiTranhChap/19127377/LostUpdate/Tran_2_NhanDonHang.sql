@@ -1,5 +1,5 @@
 --chua fix loi
-exec NhanDonHang2 @MaTX = 'TX0002', @MaDH = 'DH0001'
+exec NhanDonHang @MaTX = 'TX0002', @MaDH = 'DH0001'
 --da fix loi
 --exec NhanDonHangFix2 @MaTX = 'TX0002', @MaDH = 'DH0001'
 --select * from DONHANG
