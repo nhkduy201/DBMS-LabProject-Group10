@@ -1,4 +1,4 @@
-create proc LayThongTinTX
+create proc sp_LayThongTinTX
 	@MaTX char(6),
 	@TongThuNhap int out,
 	@TongSoDonHangNhan int out
@@ -24,7 +24,7 @@ begin
 	commit tran
 end
 go
-create proc NhanDonHang
+create proc sp_NhanDonHang
 	@MaTX char(6),
 	@MaDH char(8)
 as
