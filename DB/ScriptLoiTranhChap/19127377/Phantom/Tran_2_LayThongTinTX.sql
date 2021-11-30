@@ -1,1 +1,1 @@
-exec sp_NhanDonHang @MaTX = 'TX0001', @MaDH = 'DH0002'
+exec sp_NhanDonHangKhongCoTestTime @MaTX = 'TX0002', @MaDH = 'DH0002'

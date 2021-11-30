@@ -15,7 +15,7 @@ begin
 			-------------
 			set @TongSoDonHangNhan = (select count(*)
 	from DONHANG
-	where MaTaiXe = 'TX0001')
+	where MaTaiXe = @MaTX)
 			print @TongSoDonHangNhan
 		end try
 		begin catch
@@ -25,7 +25,7 @@ begin
 	commit tran
 end
 go
-create proc sp_NhanDonHang
+create proc sp_NhanDonHangKhongCoTestTime
 	@MaTX char(6),
 	@MaDH char(8)
 as

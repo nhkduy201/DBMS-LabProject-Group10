@@ -9,22 +9,23 @@ begin
 			set @TongThuNhap = (select sum(PhiVC)
 	from DONHANG
 	where MaTaiXe = @MaTX)
-			--test
-			waitfor delay '00:00:10'
-			-------------
-			set @TongSoDonHangNhan = (select count(*)
+	--test
+	waitfor delay '00:00:10'
+	-------------
+	set @TongSoDonHangNhan = (select count(*)
 	from DONHANG
-	where MaTaiXe = 'TX0001')
-			print @TongSoDonHangNhan
-		end try
-		begin catch
-			print N'lỗi hệ thống'
-			rollback tran
-		end catch
+	where MaTaiXe = @MaTX)
+	-- dùng câu lệnh select, uncomment để thấy rõ phantom read
+	--select * from DONHANG
+	end try
+	begin catch
+		print N'lỗi hệ thống'
+		rollback tran
+	end catch
 	commit tran
 end
 go
-create proc sp_NhanDonHang
+create proc sp_NhanDonHangKhongCoTestTime
 	@MaTX char(6),
 	@MaDH char(8)
 as
