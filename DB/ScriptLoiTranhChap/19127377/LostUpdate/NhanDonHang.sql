@@ -1,4 +1,6 @@
-create proc sp_NhanDonHang
+--alter
+create
+proc sp_NhanDonHang
 	@MaTX char(6),
 	@MaDH char(8)
 as

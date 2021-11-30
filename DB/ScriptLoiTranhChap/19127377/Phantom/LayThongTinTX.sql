@@ -1,4 +1,6 @@
-create proc sp_LayThongTinTX
+--alter
+create
+proc sp_LayThongTinTX
 	@MaTX char(6),
 	@TongThuNhap int out,
 	@TongSoDonHangNhan int out

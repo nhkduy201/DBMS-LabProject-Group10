@@ -1,4 +1,6 @@
-create proc sp_LayThongTinTX
+alter
+--create 
+proc sp_LayThongTinTX
 	@MaTX char(6),
 	@TongThuNhap int out,
 	@TongSoDonHangNhan int out
@@ -7,21 +9,20 @@ begin
 	set tran isolation level serializable
 	begin tran
 	begin try
-			set @TongThuNhap = (select sum(PhiVC)
+	set @TongThuNhap = (select sum(PhiVC)
 	from DONHANG
 	where MaTaiXe = @MaTX)
-			--test
-			waitfor delay '00:00:10'
-			-------------
-			set @TongSoDonHangNhan = (select count(*)
+	--test
+	waitfor delay '00:00:10'
+	-------------
+	set @TongSoDonHangNhan = (select count(*)
 	from DONHANG
 	where MaTaiXe = @MaTX)
-			print @TongSoDonHangNhan
-		end try
-		begin catch
-			print N'lỗi hệ thống'
-			rollback tran
-		end catch
+	end try
+	begin catch
+		print N'lỗi hệ thống'
+		rollback tran
+	end catch
 	commit tran
 end
 go
