@@ -1,6 +1,6 @@
 alter
 --create 
-proc sp_LayThongTinTX
+proc sp_LayThongTinTXFix
 	@MaTX char(6),
 	@TongThuNhap int out,
 	@TongSoDonHangNhan int out

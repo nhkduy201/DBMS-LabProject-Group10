@@ -1,6 +1,6 @@
-alter
---create
-proc sp_NhanDonHang
+--alter
+create
+proc sp_NhanDonHangFix
 	@MaTX char(6),
 	@MaDH char(8)
 as
@@ -13,7 +13,7 @@ begin
 	from DONHANG with (xlock)
 	where MaDH = @MaDH
 			--test
-			waitfor delay '00:00:10'
+			waitfor delay '00:00:05'
 			-------------
 			if @MaTaiXe is null
 			begin

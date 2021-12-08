@@ -12,7 +12,7 @@ begin
 	from DONHANG
 	where MaDH = @MaDH
 			--test
-			waitfor delay '00:00:10'
+			waitfor delay '00:00:05'
 			-------------
 			if @MaTaiXe is null
 			begin

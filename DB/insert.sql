@@ -34,14 +34,16 @@ values ('SP0001','sanpham1',100,'DT0001',1),
 		('SP0002','sanpham2',200,'DT0001',2)
 
 insert into DONHANG(MaDH,PhiVC,TinhTrangVanChuyen,MaKhachHang,MaTaiXe,MaDoiTac)
-values ('DH0001',1000,N'Đang đóng gói','KH0001',NULL,'DT0001'),
-		('DH0002',2000,N'Đang chờ tài xế','KH0001',NULL,'DT0001')
+values ('DH000001',1000,N'Đang chờ tài xế','KH0001',NULL,'DT0001'),
+		('DH000002',1000,N'Đang chờ tài xế','KH0001',NULL,'DT0001'),
+		('DH000003',1000,N'Đang chờ tài xế','KH0001',NULL,'DT0001'),
+		('DH000004',1000,N'Đang chờ tài xế','KH0001',NULL,'DT0001')
 
 insert into CT_DONHANG(MaDonHang,MaSanPham,SoLuong)
-values ('DH0001','SP0001',1),
-		('DH0001','SP0002',2),				
-		('DH0002','SP0001',3),
-		('DH0002','SP0002',4)
+values ('DH000001','SP0001',1),
+		('DH000001','SP0002',2),				
+		('DH000002','SP0001',3),
+		('DH000002','SP0002',4)
 
 
 		

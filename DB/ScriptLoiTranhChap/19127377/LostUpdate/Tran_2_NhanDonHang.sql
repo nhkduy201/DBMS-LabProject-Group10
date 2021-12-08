@@ -1,1 +1,1 @@
-exec sp_NhanDonHang @MaTX = 'TX0002', @MaDH = 'DH0001'
+exec sp_NhanDonHang @MaTX = 'TX0002', @MaDH = 'DH000001'
