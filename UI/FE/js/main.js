@@ -7,6 +7,55 @@ function createAlert(...data) {
   }
 }
 
+function xemGiaSP(isFix) {
+  let container = document.getElementsByClassName('container')[0];
+  container.innerHTML = '';
+  container.insertAdjacentHTML('afterbegin', `
+    <div class="alert alert-primary" role="alert" id="htg">Giá: </div>
+    <select id="cmsp">
+      <option value="SP0001" selected="selected">San Pham 1</option>
+      <option value="SP0002">San Pham 2</option>
+    </select>
+    <button id="xgbtn" class="btn btn-primary">Xem</button>`);
+  let btn = document.getElementById('xgbtn');
+        btn.addEventListener('click', (e) => {
+          let data = {masp: document.getElementById("cmsp").value, isfix: isFix};
+          fetch(`http://127.0.0.1:8008/xem-gia-san-pham/`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          }).then((res) => res.json()).then((json) => {
+            document.getElementById("htg").textContent = "Giá: " + json.gia;
+          });
+        });
+}
+
+function doiGiaSP() {
+  let container = document.getElementsByClassName('container')[0];
+  container.innerHTML = '';
+  container.insertAdjacentHTML('afterbegin', `
+    <select id="cmsp">
+      <option value="SP0001" selected="selected">San Pham 1</option>
+      <option value="SP0002">San Pham 2</option>
+    </select>
+    <input type="text" class="form-control" id="dgi">
+    <button id="dgbtn" class="btn btn-primary">Đổi</button>`);
+  let btn = document.getElementById('dgbtn');
+        btn.addEventListener('click', (e) => {
+          let data = {masp: document.getElementById("cmsp").value, gia: document.getElementById("dgi").value};
+          fetch(`http://127.0.0.1:8000/doi-gia-san-pham/`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          }).then((res) => res.json()).then((json) => {
+            createAlert(json.msg);
+          });
+        });
+}
 function layThongTin(isFix) {
   let container = document.getElementsByClassName('container')[0];
   container.innerHTML = '';
@@ -138,46 +187,36 @@ function layDonHang() {
       }
     });
 }
-function removeActive(cur) {
-  for(let other of document.getElementsByClassName('nav-item')) {
-    other.classList.remove('active');
-  }
-  cur.classList.add('active');
-}
 window.addEventListener("load", (event) => {
   document.getElementById('xdh').addEventListener('click', (e) => {
     layDonHang();
-    removeActive(this);
   })
   document.getElementById('ndh').addEventListener('click', (e) => {
     layDonHangChuaNhan('1');
-    removeActive(this);
   })
   document.getElementById('ndhf').addEventListener('click', (e) => {
     layDonHangChuaNhan('2');
-    removeActive(this);
   })
   document.getElementById('ltt').addEventListener('click', (e) => {
     layThongTin(false);
-    removeActive(this);
   })
   document.getElementById('lttf').addEventListener('click', (e) => {
     layThongTin(true);
-    removeActive(this);
-  })
-  document.getElementById('ndhkd').addEventListener('click', (e) => {
-    layDonHangChuaNhan('3');
-    removeActive(this);
   })
   
-  // let loginButton = document.getElementById('login');
-  // loginButton.addEventListener('click', (e) => {
-    
-  //   if(isLogin) {
-  //     loginButton.innerHTML = 'Logout';
-  //   } else {
-  //     loginButton.innerHTML = 'Login';
-  //   }
-  //   isLogin = !isLogin;
-  // });
-});s
+  document.getElementById('ndhkd').addEventListener('click', (e) => {
+    layDonHangChuaNhan('3');
+  })
+
+  document.getElementById('dgsp').addEventListener('click', (e) => {
+    doiGiaSP();
+  })
+  
+  document.getElementById('xgsp').addEventListener('click', (e) => {
+    xemGiaSP(false);
+  })
+  
+  document.getElementById('xgspf').addEventListener('click', (e) => {
+    xemGiaSP(true);
+  })
+});

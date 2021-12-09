@@ -1,1 +1,1 @@
-exec sp_CapNhatSanPham 'SP0001', -600
+exec sp_CapNhatSanPham 'SP0001', 120000000

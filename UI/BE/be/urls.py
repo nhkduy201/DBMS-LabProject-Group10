@@ -24,7 +24,9 @@ urlpatterns = [
     path('lay-don-hang-chua-nhan/', views.layDonHangChuaDuocNhan),
     path('nhan-don-hang/', views.nhanHoaDon),
     path('lay-ma-tai-xe/', views.layMaTaiXe),
-    path('lay-thong-tin/', views.layThongTin)
+    path('lay-thong-tin/', views.layThongTin),
+    path('doi-gia-san-pham/', views.doiGiaSP),
+    path('xem-gia-san-pham/', views.xemGiaSP)
     # url(r'^hoadon/([0-9]+)$', views.gethoadon),
     # url(r'^hoadon/', views.posthoadon),
     # path('statistic_detail/', views.getRequest)

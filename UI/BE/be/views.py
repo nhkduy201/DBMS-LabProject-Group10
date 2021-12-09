@@ -71,13 +71,35 @@ def layThongTin(request):
     sp = 'sp_LayThongTinTX'
     if data['isfix']:
         sp = 'sp_LayThongTinTXFix'
-    print(sp)
     cursor.execute(f'''declare @TongThuNhap int
 declare @TongSoDonHangNhan int
 exec {sp} '{data['matx']}', @TongThuNhap out, @TongSoDonHangNhan out
 select @TongThuNhap as tongtien, @TongSoDonHangNhan as sldonhang''')
-    data = cursor.fetchone()
-    return JsonResponse({'tongtien': data[0], 'sldonhang':  data[1]})
+    x = cursor.fetchone()
+    return JsonResponse({'tongtien': x[0], 'sldonhang':  x[1]})
+
+@csrf_exempt
+def doiGiaSP(request):
+    data = json.loads(request.body)
+    conn, cursor = get_conn_cursor()
+    cursor.execute(f"exec sp_CapNhatSanPham '{data['masp']}', {data['gia']}")
+    conn.commit()
+    msg = u'Đổi thành công'
+    if int(data['gia']) > 100000000:
+        msg = u'Đổi không thành công'
+    return JsonResponse({'msg': msg})
+
+@csrf_exempt
+def xemGiaSP(request):
+    data = json.loads(request.body)
+    cursor = get_conn_cursor()[1]
+    sp = 'sp_XemSanPham'
+    if data['isfix']:
+        sp = 'sp_XemSanPhamFix'
+    cursor.execute(f'''declare @Gia int
+exec {sp} '{data['masp']}', @Gia out
+select @Gia as Gia''')
+    return JsonResponse({'gia': cursor.fetchone()[0]})
 
 # @csrf_exempt
 # def gethoadon(request, page):

@@ -16,24 +16,28 @@ begin tran
 			print N'Sản phẩm ' + @MaSP + N' không tồn tại.'
 			rollback tran
 		end
-		
+			
 		if @GiaCapNhat < 0
 		begin
 			print N'Giá cập nhật không hợp lệ.'
 			rollback tran
 		end
-		
+			
 		update SANPHAM
 		set Gia = @GiaCapNhat
 		where MaSP = @MaSP
 		waitfor delay '0:0:05'
+		if exists (select Gia from SANPHAM where MaSP = @MaSP and Gia > 100000000) 
+		begin
+			raiserror (N'Giá sản phẩm không được vượt quá 100.000.000', 16, 1)
+		end
+		print N'Đổi thành công'
+		commit tran
 	end try
-	-----------
 	begin catch
-		print N'Lỗi hệ thống'
+		print N'Đổi không thành công'
 		rollback tran
 	end catch
-commit tran
 go
 
 
