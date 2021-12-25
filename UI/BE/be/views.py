@@ -51,7 +51,7 @@ def nhanHoaDon(request):
         conn.commit()
     except Exception:
         print("Some errors occur!!!")
-        return JsonResponse({'msg': 'Error!!!'}) 
+        return JsonResponse({'msg': 'Có lỗi xảy ra!!!'}) 
     return JsonResponse({'msg': 'Đã nhận'})
 
 @csrf_exempt
